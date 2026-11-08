@@ -5,6 +5,7 @@ import postgres from 'postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { AuthError } from 'next-auth';
+import bcrypt from 'bcrypt';
 import { auth, signIn } from '@/auth';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
@@ -147,4 +148,85 @@ export async function authenticate(
     // Successful sign-in redirects by throwing, so re-throw anything else.
     throw error;
   }
+}
+
+export type SignupState = {
+  errors?: {
+    name?: string[];
+    email?: string[];
+    password?: string[];
+    confirmPassword?: string[];
+  };
+  message?: string | null;
+};
+
+const SignupSchema = z
+  .object({
+    name: z.string().trim().min(1, 'Please enter your name.').max(100),
+    email: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .email('Please enter a valid email address.')
+      .max(255),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters.')
+      .max(72, 'Password must be 72 characters or fewer.'),
+    confirmPassword: z.string(),
+  })
+  .refine((d) => d.password === d.confirmPassword, {
+    message: 'Passwords do not match.',
+    path: ['confirmPassword'],
+  });
+
+export async function register(
+  prevState: SignupState,
+  formData: FormData,
+): Promise<SignupState> {
+  const validated = SignupSchema.safeParse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    password: formData.get('password'),
+    confirmPassword: formData.get('confirmPassword'),
+  });
+
+  if (!validated.success) {
+    return {
+      errors: validated.error.flatten().fieldErrors,
+      message: 'Please fix the highlighted fields.',
+    };
+  }
+
+  const { name, email, password } = validated.data;
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const created = await sql`
+      INSERT INTO users (name, email, password)
+      VALUES (${name}, ${email}, ${hashedPassword})
+      ON CONFLICT (email) DO NOTHING
+      RETURNING id
+    `;
+    if (created.length === 0) {
+      return {
+        errors: { email: ['An account with this email already exists.'] },
+        message: 'Could not create the account.',
+      };
+    }
+  } catch (error) {
+    console.error('Signup error:', error);
+    return { message: 'Database error: could not create the account.' };
+  }
+
+  // Sign the new person straight in.
+  try {
+    await signIn('credentials', { email, password, redirectTo: '/dashboard' });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      redirect('/login');
+    }
+    throw error; // the successful sign-in redirect
+  }
+  return {};
 }

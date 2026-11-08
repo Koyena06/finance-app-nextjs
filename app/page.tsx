@@ -29,12 +29,20 @@ export default function Page() {
             </a>
             , brought to you by Vercel.
           </p>
-          <Link
-            href="/login"
-            className="flex items-center gap-5 self-start border border-ice-400 bg-ice-400 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-night-950 transition-colors hover:border-ice-300 hover:bg-ice-300 md:text-sm"
-          >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-          </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/login"
+              className="flex items-center gap-5 self-start border border-ice-400 bg-ice-400 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-night-950 transition-colors hover:border-ice-300 hover:bg-ice-300 md:text-sm"
+            >
+              <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+            </Link>
+            <Link
+              href="/signup"
+              className="border border-night-500 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-night-200 transition-colors hover:border-ice-400 hover:text-ice-300 md:text-sm"
+            >
+              Sign up
+            </Link>
+          </div>
         </div>
         <div className="flex items-center justify-center border border-night-600 bg-night-900 p-6 md:w-3/5 md:px-16 md:py-12">
           <Image

@@ -12,7 +12,8 @@ revenue behind a login. Night-blue / light-blue theme with square corners.
 3. Create and fill the tables by visiting `/seed` once (safe to run again).
 4. Start it: `pnpm dev` (or `pnpm build && pnpm start`)
 
-Log in with the seeded user: **user@nextmail.com** / **123456**
+Log in with the seeded user **user@nextmail.com** / **123456**, or create your
+own account at `/signup`. Anyone who signs up can see all dashboard data.
 
 ### Pages
 
@@ -20,6 +21,7 @@ Log in with the seeded user: **user@nextmail.com** / **123456**
 | --- | --- |
 | `/` | Landing page |
 | `/login` | Log in (protected pages send you here, then back) |
+| `/signup` | Create an account (signs you in right away) |
 | `/dashboard` | Overview: totals, revenue chart, latest invoices |
 | `/dashboard/invoices` | Search, paginate, edit and delete invoices |
 | `/dashboard/invoices/create` | New invoice |

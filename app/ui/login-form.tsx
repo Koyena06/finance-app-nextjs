@@ -9,6 +9,7 @@ import {
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
+import Link from 'next/link';
 import { Button } from './button';
 import { authenticate } from '@/app/lib/actions';
 
@@ -114,6 +115,15 @@ export default function LoginForm() {
             </>
           ) : null}
         </div>
+        <p className="mt-2 text-center text-sm text-night-300">
+          New here?{' '}
+          <Link
+            href="/signup"
+            className="text-ice-400 underline decoration-ice-400/40 underline-offset-4 hover:text-ice-300"
+          >
+            Create an account
+          </Link>
+        </p>
       </div>
     </form>
   );

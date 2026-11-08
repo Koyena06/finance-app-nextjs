@@ -17,7 +17,10 @@ export const authConfig = {
         // Returning false sends visitors to /login?callbackUrl=...
         return isLoggedIn;
       }
-      if (isLoggedIn && nextUrl.pathname === '/login') {
+      if (
+        isLoggedIn &&
+        (nextUrl.pathname === '/login' || nextUrl.pathname === '/signup')
+      ) {
         return Response.redirect(new URL('/dashboard', nextUrl));
       }
       return true;
