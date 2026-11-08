@@ -14,8 +14,6 @@ export default function Search({
   const { replace } = useRouter();
 
   const handleSearch = useDebouncedCallback((term: string) => {
-    console.log(`Searching... ${term}`);
-
     const params = new URLSearchParams(searchParams);
 
     params.set('page', '1');
@@ -37,7 +35,7 @@ export default function Search({
 
       <input
         id="search"
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+        className="peer block w-full border border-night-600 bg-night-800 py-[9px] pl-10 text-sm text-night-100 placeholder:text-night-400 focus:border-ice-400 focus:ring-1 focus:ring-ice-400"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
@@ -45,7 +43,7 @@ export default function Search({
         defaultValue={searchParams.get('query')?.toString()}
       />
 
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-night-400 peer-focus:text-ice-400" />
     </div>
   );
 }

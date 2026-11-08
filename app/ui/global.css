@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-night-950 text-night-100;
+    /* Faint blueprint grid */
+    background-image:
+      linear-gradient(to right, rgb(114 184 250 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(114 184 250 / 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  ::selection {
+    @apply bg-ice-400 text-night-950;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.ice.300');
+    outline-offset: 2px;
+  }
+
+  /* Light-blue dropdown arrow so selects read well on the dark background */
+  select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2397CDFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  }
+}
+
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
