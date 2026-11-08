@@ -59,7 +59,7 @@ export default function InvoiceFormFields({
       }}
       aria-describedby="form-error"
     >
-      <div className="border border-night-600 border-l-2 border-l-ice-400 bg-night-800 p-4 md:p-6">
+      <div className="border border-night-600 bg-night-800 p-4 md:p-6">
         {/* Customer */}
         <div className="mb-6">
           <label htmlFor="customer" className={labelClass}>

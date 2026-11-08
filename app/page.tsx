@@ -8,7 +8,7 @@ import Image from 'next/image';
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end border border-night-600 border-l-4 border-l-ice-400 bg-night-900 p-4 md:h-52">
+      <div className="flex h-20 shrink-0 items-end border border-night-600 bg-night-900 p-4 md:h-52">
         <AcmeLogo />
       </div>
       {/* Reversed on desktop: screenshot on the left, copy on the right */}
